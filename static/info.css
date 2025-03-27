@@ -1,0 +1,142 @@
+/* info.css - Phiên bản tối ưu cho DICOM Viewer */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #02021c, rgb(3, 3, 55));
+    color: white;
+}
+
+/* Header */
+header {
+    padding: 40px;
+    font-size: 24px;
+    background: linear-gradient(to right, #02021c, rgb(3, 3, 55));
+    text-align: center;
+}
+
+/* Navigation bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 50px;
+    background-color: #444;
+    position: fixed;
+    width: calc(100% - 100px);
+    top: 0;
+    z-index: 100;
+}
+
+.left-buttons, .right-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+button.active {
+    background-color: #4CAF50;
+}
+
+/* Main container */
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: -70px; /* Để tránh bị navbar che */
+    padding: 20px;
+    gap: 20px;
+    min-height: calc(100vh - 140px);
+}
+
+/* DICOM Viewer container */
+/* DICOM Viewer Container - Phiên bản mới */
+.dicom-container {
+    position: relative;
+    width: 900px;
+    height: 70vh;
+    min-height: 500px;
+    max-height: 700px;
+    border: 5px solid white;
+    background-color: #000;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Phần tử chứa ảnh DICOM */
+#dicomViewer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Canvas hiển thị ảnh DICOM */
+#dicomViewer > canvas {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+/* Overlay Canvas */
+#overlayCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+}
+/* Metadata panel */
+.dicom-info {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* AI Results section */
+.ai-results {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.result-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.result-img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+    background: black;
+    border: 1px solid #444;
+}
