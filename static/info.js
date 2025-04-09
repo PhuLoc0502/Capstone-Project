@@ -42,37 +42,68 @@ function updateImageDisplay() {
 }
 
 // Hiển thị kết quả AI
+// function displayAIResults(data) {
+//     const resultContainer = document.getElementById('resultImages');
+//     resultContainer.innerHTML = `
+//         <div class="ai-results">
+//             <div class="result-item">
+//                 <h4>Ảnh Gốc</h4>
+//                 <img src="${data.original}" class="result-img">
+//             </div>
+//             <div class="result-item">
+//                 <h4>Vùng Phân Vùng</h4>
+//                 <img src="${data.mask}" class="result-img">
+//             </div>
+//             <div class="result-item">
+//                 <h4>Kết Quả Phân Tích</h4>
+//                 <img src="${data.overlay}" class="result-img">
+//             </div>
+//         </div>
+//     `;
+//     displayDicomInfo(data.metadata);
+// }
+
+// // Hiển thị metadata
+// function displayDicomInfo(metadata) {
+//     const metaContainer = document.getElementById('dicomMetadata');
+//     metaContainer.innerHTML = `
+//         <p><strong>Tên Bệnh Nhân:</strong> ${metadata.patient_name}</p>
+//         <p><strong>ID Bệnh Nhân:</strong> ${metadata.patient_id}</p>
+//         <p><strong>Ngày Chụp:</strong> ${metadata.study_date}</p>
+//         <p><strong>Loại Hình Ảnh:</strong> ${metadata.modality}</p>
+//     `;
+// }
+
 function displayAIResults(data) {
     const resultContainer = document.getElementById('resultImages');
     resultContainer.innerHTML = `
         <div class="ai-results">
             <div class="result-item">
                 <h4>Ảnh Gốc</h4>
-                <img src="${data.original}" class="result-img">
+                <img src="${data.original}" class="result-img" data-type="original">
             </div>
             <div class="result-item">
                 <h4>Vùng Phân Vùng</h4>
-                <img src="${data.mask}" class="result-img">
+                <img src="${data.mask}" class="result-img" data-type="mask">
             </div>
             <div class="result-item">
                 <h4>Kết Quả Phân Tích</h4>
-                <img src="${data.overlay}" class="result-img">
+                <img src="${data.overlay}" class="result-img" data-type="overlay">
             </div>
         </div>
     `;
     displayDicomInfo(data.metadata);
+
+    // Gắn sự kiện nháy đúp để đổi ảnh chính
+    const resultImages = document.querySelectorAll('.result-img');
+    resultImages.forEach(img => {
+        img.addEventListener('dblclick', () => {
+            displayOriginalImage(img.src);
+        });
+    });
 }
 
-// Hiển thị metadata
-function displayDicomInfo(metadata) {
-    const metaContainer = document.getElementById('dicomMetadata');
-    metaContainer.innerHTML = `
-        <p><strong>Tên Bệnh Nhân:</strong> ${metadata.patient_name}</p>
-        <p><strong>ID Bệnh Nhân:</strong> ${metadata.patient_id}</p>
-        <p><strong>Ngày Chụp:</strong> ${metadata.study_date}</p>
-        <p><strong>Loại Hình Ảnh:</strong> ${metadata.modality}</p>
-    `;
-}
+
 
 // Xử lý upload DICOM
 document.getElementById('dicomInput').addEventListener('change', async function(e) {
@@ -136,3 +167,12 @@ function flipVerticalImage() {
     updateImageDisplay();
 }
 
+function displayDicomInfo(metadata) {
+    const metaContainer = document.getElementById('dicomMetadata');
+    metaContainer.innerHTML = `
+        <p><strong>Tên Bệnh Nhân:</strong> ${metadata.patient_name}</p>
+        <p><strong>ID Bệnh Nhân:</strong> ${metadata.patient_id}</p>
+        <p><strong>Ngày Chụp:</strong> ${metadata.study_date}</p>
+        <p><strong>Loại Hình Ảnh:</strong> ${metadata.modality}</p>
+    `;
+}
