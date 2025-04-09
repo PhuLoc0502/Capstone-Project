@@ -68,43 +68,7 @@ def extract_metadata(dicom):
         'modality': safe_dicom_value(dicom, 'Modality')
     }
 
-# def process_dicom_pixels(dicom):
-#     """Xử lý pixel data với giải nén tự động và chuẩn hóa"""
-#     try:
-#         # Thử giải nén tự động
-#         pixel_array = dicom.pixel_array
-#     except:
-#         if HAVE_GDCM:
-#             try:
-#                 dicom.decompress('gdcm')
-#                 pixel_array = dicom.pixel_array
-#             except:
-#                 if HAVE_PYLIBJPEG:
-#                     try:
-#                         dicom.decompress('pylibjpeg')
-#                         pixel_array = dicom.pixel_array
-#                     except:
-#                         raise ValueError("Không thể giải nén DICOM với các thư viện hiện có")
-#                 else:
-#                     raise ValueError("Không tìm thấy thư viện giải nén phù hợp")
-    
-#     # Áp dụng các phép biến đổi
-#     pixel_array = apply_modality_lut(pixel_array, dicom)
-#     pixel_array = apply_voi_lut(pixel_array, dicom)
-    
-#     # Chuẩn hóa ảnh về dạng uint8 (0-255)
-#     if pixel_array.dtype != np.uint8:
-#         pixel_array = (pixel_array - np.min(pixel_array)) / (np.max(pixel_array) - np.min(pixel_array)) * 255
-#         pixel_array = pixel_array.astype(np.uint8)
-    
-#     # Đảm bảo ảnh là grayscale 1 channel
-#     if len(pixel_array.shape) == 3:
-#         pixel_array = cv2.cvtColor(pixel_array, cv2.COLOR_RGB2GRAY)
-#     elif len(pixel_array.shape) > 3:
-#         raise ValueError("Ảnh DICOM có số chiều không hỗ trợ")
-    
-#     return pixel_array
-########################################################################################################################
+
 def process_dicom_pixels(dicom):
     """Xử lý pixel data với giải nén tự động, chuẩn hóa và đảo màu"""
     try:
@@ -135,7 +99,7 @@ def process_dicom_pixels(dicom):
         pixel_array = pixel_array.astype(np.uint8)
     
     # Đảo màu ảnh DICOM (vì ảnh X-quang thường cần invert)
-    pixel_array = cv2.bitwise_not(pixel_array)
+    # pixel_array = cv2.bitwise_not(pixel_array)
     
     # Đảm bảo ảnh là grayscale 1 channel
     if len(pixel_array.shape) == 3:
